@@ -1,15 +1,19 @@
 package com.sk.skala.shopapi.data.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OrderItemDto {
-    // 속성
     private Long productId;
     private String productName;
     private Double productPrice;
     private Integer quantity;
-
-    // 생성자
-    public OrderItemDto(){}
-
-    // 메서드
-    
 }
