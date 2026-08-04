@@ -1,47 +1,27 @@
 package com.sk.skala.shopapi.data.table;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "customer")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Customer {
     // 속성
+    @Id
     String customerId;
     String customerPassword;
     Double customerPoint;
     
     // 생성자
-    public Customer(){}
-
     public Customer(String customerId, Double customerPoint){
         this.customerId = customerId;
-        this.customerPoint = customerPoint;
-    }
-
-    // 메서드
-    // Getter / Setter
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public String getCustomerPassword() {
-        return customerPassword;
-    }
-
-    public void setCustomerPassword(String customerPassword) {
-        this.customerPassword = customerPassword;
-    }
-
-    public Double getCustomerPoint() {
-        return customerPoint;
-    }
-
-    public void setCustomerPoint(Double customerPoint) {
         this.customerPoint = customerPoint;
     }
 }
