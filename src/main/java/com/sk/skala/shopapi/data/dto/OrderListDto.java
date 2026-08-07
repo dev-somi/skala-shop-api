@@ -16,5 +16,5 @@ import lombok.Setter;
 public class OrderListDto {
     private String customerId;
     private Double customerPoint;
-    private List<OrderItemDto> product;
+    private List<OrderItemDto> products;
 }
