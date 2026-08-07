@@ -11,8 +11,10 @@ import com.sk.skala.shopapi.common.PagedList;
 import com.sk.skala.shopapi.common.Response;
 import com.sk.skala.shopapi.data.dto.OrderItemDto;
 import com.sk.skala.shopapi.data.dto.OrderListDto;
+import com.sk.skala.shopapi.data.dto.OrderRequest;
 import com.sk.skala.shopapi.data.table.Customer;
 import com.sk.skala.shopapi.data.table.OrderItem;
+import com.sk.skala.shopapi.data.table.Product;
 import com.sk.skala.shopapi.exception.ResponseException;
 import com.sk.skala.shopapi.exception.Error;
 import com.sk.skala.shopapi.exception.ParameterException;
@@ -108,6 +110,32 @@ public class CustomerService {
         customerRepository.delete(deletedCustomer);
 
         return new Response<>("고객 삭제 성공", deletedCustomer.getCustomerId());
+    }
+
+    // 상품 주문
+    @Transactional
+    public Response<OrderItemDto> placeOrder(String customerId, OrderRequest order){
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResponseException(Error.DATA_NOT_FOUND));
+        Product product = productRepository.findById(order.getProductId())
+                .orElseThrow(() -> new ResponseException(Error.DATA_NOT_FOUND));
+
+        Double totalAmount = product.getProductPrice() * order.getQuantity();
+
+        if (customer.getCustomerPoint() >= totalAmount ){
+            customer.setCustomerPoint(customer.getCustomerPoint() - totalAmount);
+            customerRepository.save(customer);
+        } else {
+            throw new ResponseException(Error.INSUFFICIENT_FUNDS);
+        }
+
+        if (orderItemRepository.findByCustomerAndProduct(customer, product).isPresent()){
+            // 이미 주문한 상품이면 수량 추가
+        } else {
+            // 없으면 신규 생성
+        }
+
+        return Response<>("상품 주문 성공", ??);
     }
 
 }
